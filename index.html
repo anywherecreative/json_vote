@@ -1,7 +1,47 @@
 <!DOCTYPE html>
 <html>
 <head>
-	<title></title>
+	<title>Vote For Best Pony!</title>
+
+  <style>
+    BODY {
+      background: #000;
+      font-family:sans-serif;
+    }
+    FORM {
+      width:      40vw;
+      height:     50vh;
+      margin:     25vh 30vw;
+      padding:    30px;
+      box-sizing: border-box;
+      background: #fff;
+    }
+    FORM LABEL {
+      width:100%;
+      padding:10px;
+      font-size:25px;
+      display:block;
+      text-transform: capitalize;
+      cursor:pointer;
+    }
+    FORM LABEL SPAN {
+      float:right;
+    }
+    FORM LABEL:hover {
+      background:#bbccee;
+    }
+    INPUT[type='radio'] {
+      vertical-align: middle;
+      margin-right:20px;
+    }
+    BUTTON {
+      display:block;
+      margin:20px auto;
+      width:50%;
+      font-size:22px;
+    }
+  </style>
+
   <script>
     var ponies = {
       "twilight":40,
@@ -40,7 +80,10 @@
           for(pony in ponies) {
             var choiceLabel            = document.createElement("label");
             var choiceRadio            = document.createElement("input");
-            var choiceText             = document.createTextNode(pony + "(" + ponies[pony] + ")");
+            var choiceText             = document.createTextNode(pony);
+            var totalSpan              = document.createElement("span");
+            var totalText        = document.createTextNode("(" + ponies[pony] + ")");
+
             choiceLabel.for            = pony;
             choiceRadio.type           = "radio";
             choiceRadio.value          = pony;
@@ -49,6 +92,8 @@
 
             choiceLabel.appendChild(choiceRadio);
             choiceLabel.appendChild(choiceText);
+            totalSpan.appendChild(totalText);
+            choiceLabel.appendChild(totalSpan);
             voteForm.appendChild(choiceLabel);
             voteForm.appendChild(voteButton);
         }
