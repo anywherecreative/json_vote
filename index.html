@@ -17,79 +17,103 @@
       background: #fff;
     }
     FORM LABEL {
-      width:100%;
-      padding:10px;
-      font-size:25px;
-      display:block;
+      width:          100%;
+      padding:        10px;
+      font-size:      25px;
+      display:        block;
       text-transform: capitalize;
-      cursor:pointer;
+      cursor:         pointer;
     }
     FORM LABEL SPAN {
-      float:right;
+      float:         right;
     }
     FORM LABEL:hover {
-      background:#bbccee;
+      background:   #bbccee;
     }
     INPUT[type='radio'] {
       vertical-align: middle;
-      margin-right:20px;
+      margin-right:   20px;
     }
     BUTTON {
-      display:block;
-      margin:20px auto;
-      width:50%;
-      font-size:22px;
+      display:      block;
+      margin:       20px auto;
+      width:        50%;
+      font-size:    22px;
     }
   </style>
 
   <script>
+   // our dataset, this would normally be an API call but is hard coded in our example.
     var ponies = {
-      "twilight":40,
-      "aj":30,
-      "rarity":24,
-      "fluttershy":16,
-      "pinkie":10,
-      "dash":5
+      "twilight":    40,
+      "aj":          30,
+      "rarity":      24,
+      "fluttershy":  16,
+      "pinkie":      10,
+      "dash":        5
     }
-    window.onload = function() {
-        var voteForm        = document.getElementById('choices');
 
+    //before we can manipulate the dom we have to insure it's loaded.
+    window.onload = function() {
+        //our voteForm
+        var voteForm = document.getElementById('choices');
+        //call the loadVoting function, reused every time the user votes
         loadVoting();
 
+        //capture the submit event of the form
         voteForm.onsubmit = function(e) {
+          //we don't want the form to actually submit in this case.
           e.preventDefault();
+
+          //figure out which choice was selected
           var choice = document.querySelector("#choices INPUT:checked");
+          //only do something if a choice was selected
           if(typeof choice !== "null") {
+            //normally this would be an ajax request of some kind, but we'll just use our dataset
             ponies[choice.dataset.pony] += 1;
+
+            //reload the voting form
             loadVoting();
+          }
+          else {
+            //otherwise show some kind of error
+            alert('please select a pony!');
           }
         }
 
+        /**
+         * Load the actual voting form onto the page
+        **/
         function loadVoting() {
-          var voteButton      = document.createElement("button");
-          var voteText        = document.createTextNode("Vote Best Pony");
 
           //clear the elements in the form
           while (voteForm.hasChildNodes()) {
               voteForm.removeChild(voteForm.lastChild);
           }
 
+          //create our vote button, with it's text
+          var voteButton      = document.createElement("button");
+          var voteText        = document.createTextNode("Vote Best Pony");
+
+          //define what type of button it is, and add it to the form
           voteButton.type = "submit";
           voteButton.appendChild(voteText);
 
+          //loop through our list of choices, and create elements for them
           for(pony in ponies) {
             var choiceLabel            = document.createElement("label");
             var choiceRadio            = document.createElement("input");
             var choiceText             = document.createTextNode(pony);
             var totalSpan              = document.createElement("span");
-            var totalText        = document.createTextNode("(" + ponies[pony] + ")");
+            var totalText              = document.createTextNode("(" + ponies[pony] + ")");
 
             choiceLabel.for            = pony;
             choiceRadio.type           = "radio";
             choiceRadio.value          = pony;
-            choiceRadio.dataset.pony  = pony;
+            choiceRadio.dataset.pony   = pony;
             choiceRadio.name           = "ponies";
 
+            //append our elements to our form
             choiceLabel.appendChild(choiceRadio);
             choiceLabel.appendChild(choiceText);
             totalSpan.appendChild(totalText);
