@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+  <script>
+    var ponies = {
+      "twilight":40,
+      "aj":30,
+      "rarity":24,
+      "fluttershy":16,
+      "pinkie":10,
+      "dash":5
+    }
+    window.onload = function() {
+      var voteForm = document.getElementById('choices');
+      for(pony in ponies) {
+        var choiceLabel       = document.createElement("label");
+        var choiceRadio       = document.createElement("input");
+        var choiceText        = document.createTextNode(pony + "(" + ponies[pony] + ")");
+        choiceLabel.for       = pony;
+        choiceRadio.type      = "radio";
+        choiceRadio.value     = pony;
+        choiceRadio.name      = "ponies";
+
+        choiceLabel.appendChild(choiceRadio);
+        choiceLabel.appendChild(choiceText);
+        voteForm.appendChild(choiceLabel);
+
+
+      }
+    }
+  </script>
+</head>
+<body>
+	<form id="choices">
+  </form>
+</body>
+</html>
