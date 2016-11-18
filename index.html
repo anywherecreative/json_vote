@@ -12,7 +12,13 @@
       "dash":5
     }
     window.onload = function() {
-      var voteForm = document.getElementById('choices');
+      var voteForm        = document.getElementById('choices');
+      var voteButton      = document.createElement("button");
+      var voteText        = document.createTextNode("Vote Best Pony");
+
+      voteButton.type = "submit";
+      voteButton.appendChild(voteText);
+
       for(pony in ponies) {
         var choiceLabel       = document.createElement("label");
         var choiceRadio       = document.createElement("input");
@@ -25,8 +31,7 @@
         choiceLabel.appendChild(choiceRadio);
         choiceLabel.appendChild(choiceText);
         voteForm.appendChild(choiceLabel);
-
-
+        voteForm.appendChild(voteButton);
       }
     }
   </script>
