@@ -68,10 +68,9 @@
           //figure out which choice was selected
           var choice = document.querySelector("#choices INPUT:checked");
           //only do something if a choice was selected
-          if(typeof choice !== "null") {
+          if(choice !== null) {
             //normally this would be an ajax request of some kind, but we'll just use our dataset
             ponies[choice.dataset.pony] += 1;
-
             //reload the voting form
             loadVoting();
           }
