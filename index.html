@@ -32,14 +32,7 @@
       background:   #bbccee;
     }
     INPUT[type='radio'] {
-      vertical-align: middle;
-      margin-right:   20px;
-    }
-    BUTTON {
-      display:      block;
-      margin:       20px auto;
-      width:        50%;
-      font-size:    22px;
+      display:none;
     }
   </style>
 
@@ -61,25 +54,16 @@
         //call the loadVoting function, reused every time the user votes
         loadVoting();
 
-        //capture the submit event of the form
-        voteForm.onsubmit = function(e) {
-          //we don't want the form to actually submit in this case.
-          e.preventDefault();
-
-          //figure out which choice was selected
-          var choice = document.querySelector("#choices INPUT:checked");
-          //only do something if a choice was selected
-          if(choice !== null) {
-            //normally this would be an ajax request of some kind, but we'll just use our dataset
-            ponies[choice.dataset.pony] += 1;
-            //reload the voting form
-            loadVoting();
-          }
-          else {
-            //otherwise show some kind of error
-            alert('please select a pony!');
-          }
-        }
+				//Use the event.target property, to dtermine what was clicked, and vote
+				window.onclick = function(e) {
+					//if the target has a pony data attribute
+					if(e.target.dataset.pony != null) {
+						//add one to the desired pony
+						ponies[e.target.dataset.pony] += 1;
+						//reload the voting form
+					  loadVoting();
+					}
+				}
 
         /**
          * Load the actual voting form onto the page
@@ -90,14 +74,6 @@
           while (voteForm.hasChildNodes()) {
               voteForm.removeChild(voteForm.lastChild);
           }
-
-          //create our vote button, with it's text
-          var voteButton      = document.createElement("button");
-          var voteText        = document.createTextNode("Vote Best Pony");
-
-          //define what type of button it is, and add it to the form
-          voteButton.type = "submit";
-          voteButton.appendChild(voteText);
 
           //loop through our list of choices, and create elements for them
           for(pony in ponies) {
@@ -119,7 +95,6 @@
             totalSpan.appendChild(totalText);
             choiceLabel.appendChild(totalSpan);
             voteForm.appendChild(choiceLabel);
-            voteForm.appendChild(voteButton);
         }
       }
     }
